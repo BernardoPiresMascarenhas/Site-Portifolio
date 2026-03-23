@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  /* Classe para o efeito Glassmorphism leve */
+  .glass-card {
+    @apply bg-white/70 dark:bg-gray-900/60 backdrop-blur-md border border-gray-200 dark:border-gray-700/50 shadow-lg transition-all duration-300;
+  }
+  
+  /* Efeito de hover moderno para os cards */
+  .glass-card-hover {
+    @apply hover:-translate-y-2 hover:shadow-blue-500/20 hover:border-blue-500/50;
+  }
+}
+
+/* Fundo da página */
+body {
+  @apply bg-gray-50 text-gray-900 dark:bg-[#0a0a0a] dark:text-gray-100 transition-colors duration-300;
+}
