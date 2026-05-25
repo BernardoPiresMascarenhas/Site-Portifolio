@@ -1,66 +1,164 @@
 export default function Experience() {
   const experiences = [
     {
-      title: "Desenvolvedor Front-end Full Stack (Freelancer)",
-      company: "Projetos Autônomos",
-      period: "2024 - Presente",
-      description: "Desenvolvimento de soluções digitais sob demanda para negócios locais. Atuação em todo o ciclo de vida do projeto: levantamento de requisitos com o cliente, prototipagem (UI/UX), desenvolvimento (React, TypeScript, Tailwind) e deploy. Principais projetos entregues: Império dos Pets, A Criação Gráfica, Clínica de Fonoaudiologia e Itatiaia 304.",
+      title: "Desenvolvedor Full Stack",
+      company: "Freelancer Autônomo",
+      period: "2024 — Presente",
+      description: "Desenvolvimento de soluções digitais para negócios locais: levantamento de requisitos, prototipagem UI/UX, desenvolvimento e deploy. Principais entregas: Império dos Pets, A Criação Gráfica, Clínica de Fonoaudiologia e Itatiaia 304.",
       type: "Trabalho",
-      color: "border-l-cyan-500"
+      color: "#20F088",
     },
     {
       title: "Ciência da Computação",
       company: "PUC Minas",
-      period: "Fev 2024 - Jul 2028",
-      description: "Sólida base em Algoritmos e Estruturas de Dados. Desenvolvimento com o paradigma de Programação Orientada a Objetos (POO). Princípios de Engenharia de Software e modelagem de Bancos de Dados. Conhecimento aprofundado em sistemas de controle de versão (Git) e metodologias ágeis.",
-      type: "Estudo",
-      color: "border-l-blue-500"
+      period: "Fev 2024 — Jul 2028",
+      description: "Base sólida em Algoritmos e Estruturas de Dados, POO, Engenharia de Software e modelagem de Bancos de Dados. Controle de versão com Git e metodologias ágeis.",
+      type: "Formação",
+      color: "#60a5fa",
     },
     {
-      title: "Inglês",
+      title: "Inglês Técnico",
       company: "Wizard by Pearson",
-      period: "Jan 2024 - Dez 2027",
-      description: "Estudo contínuo focado em conversação, leitura técnica e escrita. Preparação para comunicação clara e eficiente em ambientes corporativos e times de tecnologia globais.",
-      type: "Estudo",
-      color: "border-l-blue-500"
-    }
+      period: "Jan 2024 — Dez 2027",
+      description: "Estudo contínuo focado em conversação, leitura técnica e escrita. Preparação para atuação em times globais de tecnologia.",
+      type: "Idioma",
+      color: "#a78bfa",
+    },
   ];
 
   return (
-    <section id="experiencia" className="py-20 container mx-auto px-6">
-      <h2 className="text-3xl font-bold mb-12 text-center">Trajetória</h2>
-      
-      <div className="max-w-3xl mx-auto space-y-8 relative">
-        {/* Linha vertical que liga os cards (opcional, dá um efeito de timeline legal) */}
-        <div className="hidden md:block absolute left-0 top-0 bottom-0 w-1 bg-gray-200 dark:bg-gray-800 ml-[1.5rem] -z-10 rounded-full"></div>
+    <section id="experiencia" style={{ padding: '7rem 0' }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
+        
+        {/* Header */}
+        <div style={{ marginBottom: '4rem' }}>
+          <div className="section-label" style={{ marginBottom: '1.25rem' }}>Trajetória</div>
+          <h2 className="section-title" style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', color: '#fff' }}>
+            Experiência &<br />
+            <span className="text-gradient">Formação</span>
+          </h2>
+        </div>
 
-        {experiences.map((exp, index) => (
-          <div 
-            key={index} 
-            // Usamos a cor definida no array para diferenciar trabalho de estudo
-            className={`glass-card p-6 md:p-8 rounded-2xl relative border-l-4 ${exp.color} transition-all duration-300 hover:-translate-y-1 hover:shadow-xl`}
-          >
-            <div className="flex flex-col md:flex-row md:items-center justify-between mb-2 gap-2">
-              <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white">
-                {exp.title}
-              </h3>
-              {/* Badge indicando se é Trabalho ou Estudo */}
-              <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 text-xs font-semibold rounded-full w-fit">
-                {exp.type}
-              </span>
-            </div>
-            
-            <div className="mb-4 flex items-center gap-2 text-sm font-semibold text-blue-600 dark:text-blue-400">
-              <span>{exp.company}</span>
-              <span className="text-gray-400 dark:text-gray-600">•</span>
-              <span>{exp.period}</span>
-            </div>
-            
-            <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-              {exp.description}
-            </p>
+        {/* Timeline */}
+        <div style={{ position: 'relative', maxWidth: '800px' }}>
+          {/* Vertical line */}
+          <div style={{
+            position: 'absolute',
+            left: '5px',
+            top: '12px',
+            bottom: '12px',
+            width: '1px',
+            background: 'linear-gradient(to bottom, rgba(32,240,136,0.5), rgba(32,240,136,0.05))',
+          }} />
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+            {experiences.map((exp, i) => (
+              <div
+                key={i}
+                style={{
+                  display: 'flex',
+                  gap: '2rem',
+                  position: 'relative',
+                }}
+              >
+                {/* Dot */}
+                <div style={{
+                  width: '11px',
+                  height: '11px',
+                  borderRadius: '50%',
+                  background: exp.color,
+                  boxShadow: `0 0 15px ${exp.color}60`,
+                  flexShrink: 0,
+                  marginTop: '1.5rem',
+                  zIndex: 1,
+                }} />
+
+                {/* Card */}
+                <div
+                  className="glass-card"
+                  style={{
+                    borderRadius: '1rem',
+                    padding: '2rem 2.25rem',
+                    flex: 1,
+                    borderLeft: `3px solid ${exp.color}40`,
+                    transition: 'all 0.3s ease',
+                    cursor: 'default',
+                  }}
+                  onMouseEnter={e => {
+                    const el = e.currentTarget;
+                    el.style.borderLeftColor = `${exp.color}`;
+                    el.style.background = `${exp.color}06`;
+                    el.style.transform = 'translateX(4px)';
+                  }}
+                  onMouseLeave={e => {
+                    const el = e.currentTarget;
+                    el.style.borderLeftColor = `${exp.color}40`;
+                    el.style.background = 'rgba(255,255,255,0.03)';
+                    el.style.transform = 'translateX(0)';
+                  }}
+                >
+                  {/* Top row */}
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.5rem', gap: '1rem', flexWrap: 'wrap' }}>
+                    <h3 style={{
+                      fontFamily: "'Syne', sans-serif",
+                      fontWeight: 700,
+                      fontSize: '1.1rem',
+                      color: '#fff',
+                      letterSpacing: '-0.01em',
+                    }}>
+                      {exp.title}
+                    </h3>
+                    <span style={{
+                      fontFamily: "'DM Mono', monospace",
+                      fontSize: '0.65rem',
+                      color: exp.color,
+                      background: `${exp.color}12`,
+                      border: `1px solid ${exp.color}30`,
+                      padding: '0.2rem 0.6rem',
+                      borderRadius: '0.25rem',
+                      whiteSpace: 'nowrap',
+                      letterSpacing: '0.08em',
+                      textTransform: 'uppercase',
+                    }}>
+                      {exp.type}
+                    </span>
+                  </div>
+
+                  {/* Company & period */}
+                  <div style={{
+                    display: 'flex',
+                    gap: '0.75rem',
+                    alignItems: 'center',
+                    marginBottom: '1rem',
+                    flexWrap: 'wrap',
+                  }}>
+                    <span style={{
+                      fontFamily: "'DM Mono', monospace",
+                      fontSize: '0.72rem',
+                      color: exp.color,
+                      letterSpacing: '0.03em',
+                    }}>{exp.company}</span>
+                    <span style={{ color: 'rgba(255,255,255,0.15)', fontSize: '0.7rem' }}>·</span>
+                    <span style={{
+                      fontFamily: "'DM Mono', monospace",
+                      fontSize: '0.7rem',
+                      color: 'rgba(255,255,255,0.3)',
+                    }}>{exp.period}</span>
+                  </div>
+
+                  <p style={{
+                    fontSize: '0.875rem',
+                    color: 'rgba(255,255,255,0.45)',
+                    lineHeight: 1.8,
+                    fontWeight: 300,
+                  }}>
+                    {exp.description}
+                  </p>
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
       </div>
     </section>
   );

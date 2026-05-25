@@ -1,134 +1,322 @@
 import React, { useState, useRef } from 'react';
-import { Mail, Loader2 } from 'lucide-react';
+import { Mail, Loader2, ArrowRight } from 'lucide-react';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import emailjs from '@emailjs/browser';
 
 export default function Contact() {
   const formRef = useRef<HTMLFormElement>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [successMessage, setSuccessMessage] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSuccessMessage("");
-    setErrorMessage("");
+    setSuccessMessage('');
+    setErrorMessage('');
     setIsLoading(true);
 
     if (!formRef.current) return;
 
     try {
-      
       await emailjs.sendForm(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID, 
-        import.meta.env.VITE_EMAILJS_TEMPLATE_ID, 
-        formRef.current, 
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        formRef.current,
         import.meta.env.VITE_EMAILJS_PUBLIC_KEY
       );
-
-      setSuccessMessage("Mensagem enviada com sucesso! Responderei em breve.");
+      setSuccessMessage('Mensagem enviada! Responderei em breve.');
       formRef.current.reset();
     } catch (error) {
-      console.error("Erro:", error);
-      setErrorMessage("Erro ao enviar. Tente novamente mais tarde.");
+      console.error('Erro:', error);
+      setErrorMessage('Erro ao enviar. Tente novamente.');
     } finally {
       setIsLoading(false);
-      
-      // Limpa as mensagens após 5 segundos
-      setTimeout(() => {
-        setSuccessMessage("");
-        setErrorMessage("");
-      }, 5000);
+      setTimeout(() => { setSuccessMessage(''); setErrorMessage(''); }, 5000);
     }
   };
 
+  const contacts = [
+    {
+      icon: <Mail size={18} />,
+      label: 'E-mail',
+      value: 'bernardomasca3008@gmail.com',
+      href: 'mailto:bernardomasca3008@gmail.com',
+    },
+    {
+      icon: <FaGithub size={18} />,
+      label: 'GitHub',
+      value: 'BernardoPiresMascarenhas',
+      href: 'https://github.com/BernardoPiresMascarenhas',
+    },
+    {
+      icon: <FaLinkedin size={18} />,
+      label: 'LinkedIn',
+      value: 'bernardo-pires',
+      href: 'https://www.linkedin.com/in/bernardo-pires-/',
+    },
+  ];
+
   return (
-    <section id="contato" className="py-20 container mx-auto px-6 mb-20">
-      <div className="max-w-4xl mx-auto glass-card p-8 md:p-12 rounded-3xl grid md:grid-cols-2 gap-12">
+    <section id="contato" style={{ padding: '7rem 0 5rem' }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
         
-        {/* Info de Contato (Mantido igual) */}
-        <div className="flex flex-col justify-center">
-          <h2 className="text-3xl font-bold mb-4">Vamos conversar?</h2>
-          <p className="text-gray-600 dark:text-gray-300 mb-8">
-            Estou sempre aberto a novas oportunidades e projetos interessantes. Me mande uma mensagem!
+        {/* Header */}
+        <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+          <div className="section-label" style={{ marginBottom: '1.25rem', justifyContent: 'center' }}>Contato</div>
+          <h2 className="section-title" style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', color: '#fff', marginBottom: '1rem' }}>
+            Vamos construir<br />
+            <span className="text-gradient">algo incrível?</span>
+          </h2>
+          <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.95rem', maxWidth: '480px', margin: '0 auto', fontWeight: 300 }}>
+            Estou aberto a novos projetos e oportunidades. Manda uma mensagem!
           </p>
-          
-          <div className="space-y-4">
-            <a href="mailto:bernardomasca3008@gmail.com" className="flex items-center gap-3 text-lg hover:text-blue-500 transition-colors">
-              <Mail className="text-blue-500" /> bernardomasca3008@gmail.com
-            </a>
-            <a href="https://github.com/BernardoPiresMascarenhas" target="_blank" rel="noreferrer" className="flex items-center gap-3 text-lg hover:text-blue-500 transition-colors">
-              <FaGithub className="text-blue-500" /> GitHub
-            </a>
-            <a href="https://www.linkedin.com/in/bernardo-pires-/" target="_blank" rel="noreferrer" className="flex items-center gap-3 text-lg hover:text-blue-500 transition-colors">
-              <FaLinkedin className="text-blue-500" /> LinkedIn
-            </a>
-          </div>
         </div>
 
-        {/* Formulário com EmailJS e o botão do Império dos Pets adaptado */}
-        <form ref={formRef} onSubmit={handleSubmit} className="flex flex-col gap-4 relative">
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: '1fr 1.5fr',
+          gap: '2.5rem',
+          alignItems: 'start',
+        }} className="contact-grid">
           
-          {errorMessage && <p className="text-red-500 text-sm font-medium">{errorMessage}</p>}
+          {/* Left: contact info */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            {contacts.map((contact) => (
+              <a
+                key={contact.label}
+                href={contact.href}
+                target="_blank"
+                rel="noreferrer"
+                className="glass-card"
+                style={{
+                  padding: '1.5rem 1.75rem',
+                  borderRadius: '0.875rem',
+                  textDecoration: 'none',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '1.25rem',
+                  transition: 'all 0.25s ease',
+                }}
+                onMouseEnter={e => {
+                  const el = e.currentTarget;
+                  el.style.borderColor = 'rgba(32,240,136,0.3)';
+                  el.style.background = 'rgba(32,240,136,0.04)';
+                  el.style.transform = 'translateX(4px)';
+                }}
+                onMouseLeave={e => {
+                  const el = e.currentTarget;
+                  el.style.borderColor = 'rgba(255,255,255,0.07)';
+                  el.style.background = 'rgba(255,255,255,0.03)';
+                  el.style.transform = 'translateX(0)';
+                }}
+              >
+                <div style={{
+                  width: '40px',
+                  height: '40px',
+                  borderRadius: '0.6rem',
+                  background: 'rgba(32,240,136,0.1)',
+                  border: '1px solid rgba(32,240,136,0.2)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: '#20F088',
+                  flexShrink: 0,
+                }}>
+                  {contact.icon}
+                </div>
+                <div style={{ flex: 1, overflow: 'hidden' }}>
+                  <div style={{
+                    fontFamily: "'DM Mono', monospace",
+                    fontSize: '0.65rem',
+                    color: 'rgba(255,255,255,0.3)',
+                    letterSpacing: '0.1em',
+                    textTransform: 'uppercase',
+                    marginBottom: '0.2rem',
+                  }}>
+                    {contact.label}
+                  </div>
+                  <div style={{
+                    fontFamily: "'DM Sans', sans-serif",
+                    fontSize: '0.82rem',
+                    color: 'rgba(255,255,255,0.7)',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap',
+                  }}>
+                    {contact.value}
+                  </div>
+                </div>
+                <ArrowRight size={16} style={{ color: 'rgba(255,255,255,0.2)', flexShrink: 0 }} />
+              </a>
+            ))}
 
-          <div>
-            <label className="block text-sm font-medium mb-1">Nome</label>
-            {/* O atributo 'name' é crucial para o EmailJS identificar os campos */}
-            <input 
-              type="text" 
-              name="user_name" 
-              required
-              placeholder="Seu nome" 
-              className="w-full px-4 py-3 rounded-lg bg-white/50 dark:bg-gray-900/50 border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all" 
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium mb-1">E-mail</label>
-            <input 
-              type="email" 
-              name="user_email" 
-              required
-              placeholder="seu@email.com" 
-              className="w-full px-4 py-3 rounded-lg bg-white/50 dark:bg-gray-900/50 border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all" 
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium mb-1">Mensagem</label>
-            <textarea 
-              rows={4} 
-              name="message" 
-              required
-              placeholder="Como posso ajudar?" 
-              className="w-full px-4 py-3 rounded-lg bg-white/50 dark:bg-gray-900/50 border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all resize-none"
-            ></textarea>
-          </div>
-
-          <button 
-            type="submit" 
-            disabled={isLoading}
-            className={`w-full py-3 mt-2 rounded-lg font-semibold transition-all flex justify-center items-center ${
-              isLoading 
-                ? 'bg-blue-400 cursor-not-allowed text-white' 
-                : 'bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-500/30'
-            }`}
-          >
-            {isLoading ? (
-              <span className="flex items-center gap-2">
-                <Loader2 className="h-5 w-5 animate-spin" /> Enviando...
+            {/* Availability badge */}
+            <div className="glass-card" style={{
+              padding: '1.25rem 1.75rem',
+              borderRadius: '0.875rem',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.75rem',
+              marginTop: '0.5rem',
+            }}>
+              <div style={{
+                width: '8px',
+                height: '8px',
+                borderRadius: '50%',
+                background: '#20F088',
+                boxShadow: '0 0 10px rgba(32,240,136,0.8)',
+                animation: 'pulse-green 2s ease-in-out infinite',
+                flexShrink: 0,
+              }} />
+              <span style={{
+                fontFamily: "'DM Mono', monospace",
+                fontSize: '0.72rem',
+                color: 'rgba(255,255,255,0.5)',
+                letterSpacing: '0.05em',
+              }}>
+                Disponível para novos projetos
               </span>
-            ) : (
-              'Enviar Mensagem'
-            )}
-          </button>
-
-          {successMessage && (
-            <div className="absolute -bottom-14 left-0 w-full bg-green-100 dark:bg-green-900/30 border border-green-500 text-green-700 dark:text-green-400 px-4 py-2 rounded-lg text-center text-sm font-medium animate-pulse">
-              {successMessage}
             </div>
-          )}
-        </form>
+          </div>
 
+          {/* Right: form */}
+          <div className="glass-card" style={{ borderRadius: '1.25rem', padding: '2.5rem' }}>
+            <form ref={formRef} onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+              
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }} className="form-row">
+                <div>
+                  <label style={{
+                    display: 'block',
+                    fontFamily: "'DM Mono', monospace",
+                    fontSize: '0.68rem',
+                    color: 'rgba(255,255,255,0.4)',
+                    letterSpacing: '0.1em',
+                    textTransform: 'uppercase',
+                    marginBottom: '0.5rem',
+                  }}>
+                    Nome
+                  </label>
+                  <input
+                    type="text"
+                    name="user_name"
+                    required
+                    placeholder="Seu nome"
+                    className="form-input"
+                  />
+                </div>
+                <div>
+                  <label style={{
+                    display: 'block',
+                    fontFamily: "'DM Mono', monospace",
+                    fontSize: '0.68rem',
+                    color: 'rgba(255,255,255,0.4)',
+                    letterSpacing: '0.1em',
+                    textTransform: 'uppercase',
+                    marginBottom: '0.5rem',
+                  }}>
+                    E-mail
+                  </label>
+                  <input
+                    type="email"
+                    name="user_email"
+                    required
+                    placeholder="seu@email.com"
+                    className="form-input"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label style={{
+                  display: 'block',
+                  fontFamily: "'DM Mono', monospace",
+                  fontSize: '0.68rem',
+                  color: 'rgba(255,255,255,0.4)',
+                  letterSpacing: '0.1em',
+                  textTransform: 'uppercase',
+                  marginBottom: '0.5rem',
+                }}>
+                  Mensagem
+                </label>
+                <textarea
+                  rows={5}
+                  name="message"
+                  required
+                  placeholder="Conte sobre o seu projeto..."
+                  className="form-input"
+                  style={{ resize: 'none' }}
+                />
+              </div>
+
+              {errorMessage && (
+                <div style={{
+                  padding: '0.75rem 1rem',
+                  background: 'rgba(239,68,68,0.1)',
+                  border: '1px solid rgba(239,68,68,0.3)',
+                  borderRadius: '0.5rem',
+                  color: '#f87171',
+                  fontSize: '0.82rem',
+                  fontFamily: "'DM Mono', monospace",
+                }}>
+                  {errorMessage}
+                </div>
+              )}
+              {successMessage && (
+                <div style={{
+                  padding: '0.75rem 1rem',
+                  background: 'rgba(32,240,136,0.1)',
+                  border: '1px solid rgba(32,240,136,0.3)',
+                  borderRadius: '0.5rem',
+                  color: '#20F088',
+                  fontSize: '0.82rem',
+                  fontFamily: "'DM Mono', monospace",
+                }}>
+                  ✓ {successMessage}
+                </div>
+              )}
+
+              <button
+                type="submit"
+                disabled={isLoading}
+                className="btn-primary"
+                style={{
+                  width: '100%',
+                  justifyContent: 'center',
+                  opacity: isLoading ? 0.7 : 1,
+                  cursor: isLoading ? 'not-allowed' : 'pointer',
+                  border: 'none',
+                  fontSize: '0.9rem',
+                }}
+              >
+                {isLoading ? (
+                  <>
+                    <Loader2 size={18} style={{ animation: 'spin 1s linear infinite' }} />
+                    Enviando...
+                  </>
+                ) : (
+                  <>
+                    Enviar Mensagem <ArrowRight size={18} />
+                  </>
+                )}
+              </button>
+            </form>
+          </div>
+        </div>
       </div>
+
+      <style>{`
+        @media (max-width: 768px) {
+          .contact-grid {
+            grid-template-columns: 1fr !important;
+          }
+          .form-row {
+            grid-template-columns: 1fr !important;
+          }
+        }
+        @keyframes spin {
+          to { transform: rotate(360deg); }
+        }
+      `}</style>
     </section>
   );
 }

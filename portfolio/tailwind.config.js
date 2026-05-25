@@ -6,7 +6,18 @@ export default {
   ],
   darkMode: 'class',
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        green: {
+          DEFAULT: '#20F088',
+        }
+      },
+      fontFamily: {
+        syne: ['Syne', 'sans-serif'],
+        mono: ['DM Mono', 'monospace'],
+        sans: ['DM Sans', 'system-ui', 'sans-serif'],
+      },
+    },
   },
   plugins: [],
 }
