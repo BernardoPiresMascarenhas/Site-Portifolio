@@ -30,7 +30,7 @@ const highlightedProjects = [
     subtitle: "Experiência Imersiva 360°",
     desc: "SPA com animações Framer Motion, visualização imersiva 360° do consultório, mapa interativo e agendamento direto via WhatsApp. Experiência premium para o paciente.",
     techs: ["React", "TypeScript", "Framer Motion", "WhatsApp API", "360° View"],
-    link: "https://site-fono-rosy.vercel.app/",
+    link: "https://www.fonoanamascarenhas.com.br/",
     imgSrc: "/clinica-fono.png", 
     accent: "#38bdf8",
     placeholderColor: "from-sky-900/40 to-cyan-900/40",

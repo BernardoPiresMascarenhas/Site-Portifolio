@@ -211,7 +211,7 @@ export default function Hero() {
             }}
           >
             {[
-              { number: '6+', label: 'Projetos entregues' },
+              { number: '7+', label: 'Projetos entregues' },
               { number: '2024', label: 'Ano de início' },
               { number: '100%', label: 'Dedicação' },
             ].map((stat) => (

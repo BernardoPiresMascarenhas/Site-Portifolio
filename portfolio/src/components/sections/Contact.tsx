@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Mail, Loader2, ArrowRight } from 'lucide-react';
-import { FaGithub, FaLinkedin } from 'react-icons/fa';
+import { FaInstagram , FaLinkedin, FaWhatsapp } from 'react-icons/fa';
 import emailjs from '@emailjs/browser';
 
 export default function Contact() {
@@ -37,16 +37,22 @@ export default function Contact() {
 
   const contacts = [
     {
+      icon: <FaWhatsapp size={18} />,
+      label: 'Whatsapp',
+      value: '31 994947303',
+      href: 'https://wa.me/5531994947303',
+    },
+    {
+      icon: <FaInstagram  size={18} />,
+      label: 'Instagram',
+      value: 'bernardopires.dev',
+      href: 'https://www.instagram.com/bernardopires.dev/',
+    },
+    {
       icon: <Mail size={18} />,
       label: 'E-mail',
       value: 'bernardomasca3008@gmail.com',
       href: 'mailto:bernardomasca3008@gmail.com',
-    },
-    {
-      icon: <FaGithub size={18} />,
-      label: 'GitHub',
-      value: 'BernardoPiresMascarenhas',
-      href: 'https://github.com/BernardoPiresMascarenhas',
     },
     {
       icon: <FaLinkedin size={18} />,
