@@ -46,7 +46,18 @@ const highlightedProjects = [
     accent: "#f59e0b",
     placeholderColor: "from-amber-900/40 to-orange-900/40",
     icon: "🍺",
-  }
+  },
+  {
+  title: "Casa ACP",
+  subtitle: "Espaço de Psicologia e Formação",
+  desc: "Plataforma desenvolvida para um espaço de psicologia e desenvolvimento humano focado na Abordagem Centrada na Pessoa, com arquitetura moderna e forte otimização técnica de SEO.",
+  techs: ["Next.js", "React", "SEO", "Node.js"],
+  link: "https://casaacp.com.br/",
+  imgSrc: "/casa-acp.png", 
+  accent: "#6b705c", 
+  placeholderColor: "from-stone-700/40 to-orange-900/40",
+  icon: "🏡",
+}
 ];
 
 // REMOVIDO o gradient daqui
