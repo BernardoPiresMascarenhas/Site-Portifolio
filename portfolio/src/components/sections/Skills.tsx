@@ -26,14 +26,14 @@ export default function Skills() {
   ];
 
   return (
-    <section id="habilidades" style={{ padding: '7rem 0', position: 'relative' }}>
+    <section id="habilidades" style={{ padding: '7rem 0', position: 'relative', overflow: 'hidden' }}>
       {/* Background glow */}
       <div style={{
         position: 'absolute',
         bottom: 0,
         left: '50%',
         transform: 'translateX(-50%)',
-        width: '600px',
+        width: 'min(600px, 100%)',
         height: '300px',
         background: 'radial-gradient(ellipse at center bottom, rgba(32,240,136,0.05) 0%, transparent 70%)',
         pointerEvents: 'none',
@@ -51,7 +51,7 @@ export default function Skills() {
           </h2>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: '3rem', alignItems: 'start' }} className="skills-grid">
+        <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1.5fr) minmax(0, 1fr)', gap: '3rem', alignItems: 'start' }} className="skills-grid">
           
           {/* Hard Skills with bars */}
           <div className="glass-card" style={{ borderRadius: '1.25rem', padding: '2.5rem' }}>
@@ -168,7 +168,7 @@ export default function Skills() {
       <style>{`
         @media (max-width: 768px) {
           .skills-grid {
-            grid-template-columns: 1fr !important;
+            grid-template-columns: minmax(0, 1fr) !important;
           }
         }
       `}</style>

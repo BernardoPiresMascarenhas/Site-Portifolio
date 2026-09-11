@@ -29,6 +29,9 @@ export default function Hero() {
 
   // Parallax mouse effect
   useEffect(() => {
+    // Parallax so faz sentido em dispositivos com mouse de verdade
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
     const handleMouse = (e: MouseEvent) => {
       if (!containerRef.current) return;
       const { clientX, clientY } = e;
@@ -48,7 +51,6 @@ export default function Hero() {
     <section
       ref={containerRef}
       style={{
-        minHeight: '100vh',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -56,7 +58,7 @@ export default function Hero() {
         overflow: 'hidden',
         paddingTop: '70px',
       }}
-      className="grid-bg"
+      className="grid-bg hero-section"
     >
       {/* Ambient glow */}
       <div

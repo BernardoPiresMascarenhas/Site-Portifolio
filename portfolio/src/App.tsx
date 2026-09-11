@@ -8,7 +8,7 @@ import Contact from './components/sections/Contact';
 
 function App() {
   return (
-    <div style={{ minHeight: '100vh', background: '#080b0e' }}>
+    <div style={{ minHeight: '100vh', background: '#080b0e', width: '100%', maxWidth: '100%', overflowX: 'clip', position: 'relative' }}>
       <Header />
       <main>
         <Hero />
@@ -43,15 +43,6 @@ function App() {
           }}>
             © {new Date().getFullYear()} Bernardo Pires Mascarenhas · Todos os direitos reservados
           </p>
-          <div style={{
-            fontFamily: "'DM Mono', monospace",
-            fontSize: '0.7rem',
-            color: '#20F088',
-            letterSpacing: '0.05em',
-            opacity: 0.6,
-          }}>
-            made with ♥ &amp; coffee
-          </div>
         </div>
       </footer>
     </div>

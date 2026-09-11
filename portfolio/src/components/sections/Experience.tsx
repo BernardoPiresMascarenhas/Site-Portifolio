@@ -1,3 +1,5 @@
+import { canHover } from '../../utils/canHover';
+
 export default function Experience() {
   const experiences = [
     {
@@ -85,6 +87,7 @@ export default function Experience() {
                     cursor: 'default',
                   }}
                   onMouseEnter={e => {
+                    if (!canHover()) return;
                     const el = e.currentTarget;
                     el.style.borderLeftColor = `${exp.color}`;
                     el.style.background = `${exp.color}06`;

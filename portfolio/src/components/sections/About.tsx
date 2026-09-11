@@ -2,7 +2,7 @@ export default function About() {
   return (
     <section id="sobre" style={{ padding: '7rem 0', position: 'relative' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '5rem', alignItems: 'center' }} className="about-grid">
+        <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr)', gap: '5rem', alignItems: 'center' }} className="about-grid">
           
           {/* Left: text */}
           <div>
@@ -140,7 +140,7 @@ export default function About() {
       <style>{`
         @media (max-width: 768px) {
           .about-grid {
-            grid-template-columns: 1fr !important;
+            grid-template-columns: minmax(0, 1fr) !important;
             gap: 3rem !important;
           }
         }

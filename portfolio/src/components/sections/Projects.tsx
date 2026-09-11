@@ -1,6 +1,7 @@
 import { ExternalLink } from 'lucide-react';
 import { FaGithub } from 'react-icons/fa';
 import { useGithubRepos } from '../../hooks/useGithubRepos';
+import { canHover } from '../../utils/canHover';
 
 const highlightedProjects = [
   {
@@ -57,7 +58,18 @@ const highlightedProjects = [
   accent: "#6b705c", 
   placeholderColor: "from-stone-700/40 to-orange-900/40",
   icon: "🏡",
-}
+},
+{
+  title: "Progus Contabilidade",
+  subtitle: "Contabilidade Consultiva para Empresas",
+  desc: "Site institucional desenvolvido para um escritório de contabilidade com mais de 35 anos de mercado, com identidade visual sóbria, animações fluidas e formulário de contato integrado a envio de e-mail transacional.",
+  techs: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
+  link: "https://www.proguscontabilidade.com.br/",
+  imgSrc: "/progusContabilidade.png",
+  accent: "#062960",
+  placeholderColor: "from-blue-900/40 to-slate-800/40",
+  icon: "📊",
+},
 ];
 
 // REMOVIDO o gradient daqui
@@ -170,7 +182,7 @@ export default function Projects() {
 
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(480px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(min(480px, 100%), 1fr))',
           gap: '1.5rem',
           marginBottom: '5rem',
         }} className="projects-grid">
@@ -288,6 +300,7 @@ export default function Projects() {
                     transition: 'all 0.25s ease',
                   }}
                   onMouseEnter={e => {
+                    if (!canHover()) return;
                     const el = e.currentTarget as HTMLElement;
                     el.style.borderColor = 'rgba(32,240,136,0.3)';
                     el.style.transform = 'translateY(-3px)';
@@ -358,7 +371,7 @@ export default function Projects() {
       <style>{`
         @media (max-width: 640px) {
           .projects-grid {
-            grid-template-columns: 1fr !important;
+            grid-template-columns: minmax(0, 1fr) !important;
           }
         }
         @keyframes shimmer {

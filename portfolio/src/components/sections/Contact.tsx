@@ -1,34 +1,55 @@
 import React, { useState, useRef } from 'react';
 import { Mail, Loader2, ArrowRight } from 'lucide-react';
 import { FaInstagram , FaLinkedin, FaWhatsapp } from 'react-icons/fa';
-import emailjs from '@emailjs/browser';
+import { canHover } from '../../utils/canHover';
 
 export default function Contact() {
   const formRef = useRef<HTMLFormElement>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [phone, setPhone] = useState('');
+
+  // (31) 99999-9999 — aceita fixo (10 digitos) e celular (11)
+  const formatPhone = (value: string) => {
+    const d = value.replace(/\D/g, '').slice(0, 11);
+    if (d.length === 0) return '';
+    if (d.length <= 2) return `(${d}`;
+    if (d.length <= 6) return `(${d.slice(0, 2)}) ${d.slice(2)}`;
+    if (d.length <= 10) return `(${d.slice(0, 2)}) ${d.slice(2, 6)}-${d.slice(6)}`;
+    return `(${d.slice(0, 2)}) ${d.slice(2, 7)}-${d.slice(7)}`;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!formRef.current) return;
+
     setSuccessMessage('');
     setErrorMessage('');
     setIsLoading(true);
 
-    if (!formRef.current) return;
+    const payload = Object.fromEntries(new FormData(formRef.current));
 
     try {
-      await emailjs.sendForm(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-        formRef.current,
-        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
-      );
+      const resposta = await fetch('/api/contato', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      const corpo = await resposta.json().catch(() => ({}));
+
+      if (!resposta.ok) {
+        setErrorMessage(corpo.erro ?? 'Erro ao enviar. Tente novamente.');
+        return;
+      }
+
       setSuccessMessage('Mensagem enviada! Responderei em breve.');
       formRef.current.reset();
+      setPhone('');
     } catch (error) {
       console.error('Erro:', error);
-      setErrorMessage('Erro ao enviar. Tente novamente.');
+      setErrorMessage('Sem conexão com o servidor. Tente novamente.');
     } finally {
       setIsLoading(false);
       setTimeout(() => { setSuccessMessage(''); setErrorMessage(''); }, 5000);
@@ -39,8 +60,8 @@ export default function Contact() {
     {
       icon: <FaWhatsapp size={18} />,
       label: 'Whatsapp',
-      value: '31 994947303',
-      href: 'https://wa.me/5531994947303',
+      value: '31 975370628',
+      href: 'https://wa.me/5531975370628',
     },
     {
       icon: <FaInstagram  size={18} />,
@@ -51,8 +72,8 @@ export default function Contact() {
     {
       icon: <Mail size={18} />,
       label: 'E-mail',
-      value: 'bernardomasca3008@gmail.com',
-      href: 'mailto:bernardomasca3008@gmail.com',
+      value: 'bernardopiresdev@gmail.com',
+      href: 'mailto:bernardopiresdev@gmail.com',
     },
     {
       icon: <FaLinkedin size={18} />,
@@ -80,7 +101,7 @@ export default function Contact() {
 
         <div style={{
           display: 'grid',
-          gridTemplateColumns: '1fr 1.5fr',
+          gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1.5fr)',
           gap: '2.5rem',
           alignItems: 'start',
         }} className="contact-grid">
@@ -104,6 +125,7 @@ export default function Contact() {
                   transition: 'all 0.25s ease',
                 }}
                 onMouseEnter={e => {
+                  if (!canHover()) return;
                   const el = e.currentTarget;
                   el.style.borderColor = 'rgba(32,240,136,0.3)';
                   el.style.background = 'rgba(32,240,136,0.04)';
@@ -130,7 +152,7 @@ export default function Contact() {
                 }}>
                   {contact.icon}
                 </div>
-                <div style={{ flex: 1, overflow: 'hidden' }}>
+                <div style={{ flex: 1, minWidth: 0, overflow: 'hidden' }}>
                   <div style={{
                     fontFamily: "'DM Mono', monospace",
                     fontSize: '0.65rem',
@@ -145,9 +167,8 @@ export default function Contact() {
                     fontFamily: "'DM Sans', sans-serif",
                     fontSize: '0.82rem',
                     color: 'rgba(255,255,255,0.7)',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                    whiteSpace: 'nowrap',
+                    // quebra so quando nao couber (no desktop continua em 1 linha)
+                    overflowWrap: 'anywhere',
                   }}>
                     {contact.value}
                   </div>
@@ -188,8 +209,17 @@ export default function Contact() {
           {/* Right: form */}
           <div className="glass-card" style={{ borderRadius: '1.25rem', padding: '2.5rem' }}>
             <form ref={formRef} onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+              <input
+                type="text"
+                name="website"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                style={{ position: 'absolute', left: '-9999px', width: '1px', height: '1px', opacity: 0 }}
+              />
+
               
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }} className="form-row">
+              <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr)', gap: '1rem' }} className="form-row">
                 <div>
                   <label style={{
                     display: 'block',
@@ -204,7 +234,7 @@ export default function Contact() {
                   </label>
                   <input
                     type="text"
-                    name="user_name"
+                    name="nome"
                     required
                     placeholder="Seu nome"
                     className="form-input"
@@ -224,7 +254,7 @@ export default function Contact() {
                   </label>
                   <input
                     type="email"
-                    name="user_email"
+                    name="email"
                     required
                     placeholder="seu@email.com"
                     className="form-input"
@@ -242,11 +272,38 @@ export default function Contact() {
                   textTransform: 'uppercase',
                   marginBottom: '0.5rem',
                 }}>
+                  Telefone / WhatsApp
+                </label>
+                <input
+                  type="tel"
+                  name="telefone"
+                  required
+                  inputMode="numeric"
+                  autoComplete="tel"
+                  pattern="\(\d{2}\) \d{4,5}-\d{4}"
+                  title="Informe DDD + número, ex: (31) 99999-9999"
+                  placeholder="(31) 99999-9999"
+                  className="form-input"
+                  value={phone}
+                  onChange={(e) => setPhone(formatPhone(e.target.value))}
+                />
+              </div>
+
+              <div>
+                <label style={{
+                  display: 'block',
+                  fontFamily: "'DM Mono', monospace",
+                  fontSize: '0.68rem',
+                  color: 'rgba(255,255,255,0.4)',
+                  letterSpacing: '0.1em',
+                  textTransform: 'uppercase',
+                  marginBottom: '0.5rem',
+                }}>
                   Mensagem
                 </label>
                 <textarea
                   rows={5}
-                  name="message"
+                  name="mensagem"
                   required
                   placeholder="Conte sobre o seu projeto..."
                   className="form-input"
@@ -313,10 +370,10 @@ export default function Contact() {
       <style>{`
         @media (max-width: 768px) {
           .contact-grid {
-            grid-template-columns: 1fr !important;
+            grid-template-columns: minmax(0, 1fr) !important;
           }
           .form-row {
-            grid-template-columns: 1fr !important;
+            grid-template-columns: minmax(0, 1fr) !important;
           }
         }
         @keyframes spin {
