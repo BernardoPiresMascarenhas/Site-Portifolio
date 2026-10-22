@@ -1,51 +1,36 @@
 import Header from './components/layout/Header';
+import Footer from './components/layout/Footer';
+import FloatingWhatsApp from './components/layout/FloatingWhatsApp';
 import Hero from './components/sections/Hero';
-import About from './components/sections/About';
 import Projects from './components/sections/Projects';
-import Skills from './components/sections/Skills';
-import Experience from './components/sections/Experience';
+import Services from './components/sections/Services';
+import Differentials from './components/sections/Differentials';
+import Process from './components/sections/Process';
+import About from './components/sections/About';
+import Faq from './components/sections/Faq';
 import Contact from './components/sections/Contact';
+import { usePageEffects } from './hooks/usePageEffects';
 
 function App() {
+  usePageEffects();
+
   return (
-    <div style={{ minHeight: '100vh', background: '#080b0e', width: '100%', maxWidth: '100%', overflowX: 'clip', position: 'relative' }}>
+    <>
+      <a href="#conteudo" className="skip-link">Pular para o conteúdo</a>
       <Header />
-      <main>
+      <main id="conteudo">
         <Hero />
-        <About />
         <Projects />
-        <Skills />
-        <Experience />
+        <Services />
+        <Differentials />
+        <Process />
+        <About />
+        <Faq />
         <Contact />
       </main>
-      <footer style={{
-        borderTop: '1px solid rgba(255,255,255,0.06)',
-        padding: '2.5rem 2rem',
-        textAlign: 'center',
-      }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
-          <span style={{
-            fontFamily: "'Syne', sans-serif",
-            fontWeight: 700,
-            fontSize: '1.1rem',
-            background: 'linear-gradient(135deg, #20F088, #80ffcc)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            backgroundClip: 'text',
-          }}>
-            B.Pires
-          </span>
-          <p style={{
-            fontFamily: "'DM Mono', monospace",
-            fontSize: '0.7rem',
-            color: 'rgba(255,255,255,0.25)',
-            letterSpacing: '0.05em',
-          }}>
-            © {new Date().getFullYear()} Bernardo Pires Mascarenhas · Todos os direitos reservados
-          </p>
-        </div>
-      </footer>
-    </div>
+      <Footer />
+      <FloatingWhatsApp />
+    </>
   );
 }
 

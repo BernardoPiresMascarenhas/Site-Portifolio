@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://bernardopiresdev.com.br/sitemap.xml
