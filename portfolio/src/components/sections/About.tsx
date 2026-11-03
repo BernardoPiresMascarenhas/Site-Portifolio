@@ -3,6 +3,11 @@ import { FaGithub, FaInstagram, FaLinkedin } from 'react-icons/fa';
 import { contact, techStack, timeline } from '../../data/site';
 
 const RING = 'Desenvolvedor freelancer • Belo Horizonte • Sites sob medida • ';
+/**
+ * Cada letra recebe um ângulo fixo ao redor do círculo. Não depende de textPath/textLength,
+ * que o Safari do iPhone não respeita (o fim da frase sobrepunha o começo).
+ */
+const RING_CHARS = [...RING.toUpperCase()];
 
 export default function About() {
   return (
@@ -10,14 +15,15 @@ export default function About() {
       <div className="container about__layout">
         <div className="about__visual" data-reveal aria-hidden="true">
           <div className="seal">
-            <svg viewBox="0 0 200 200" className="seal__ring">
-              <defs>
-                <path id="seal-path" d="M100,100 m-82,0 a82,82 0 1,1 164,0 a82,82 0 1,1 -164,0" />
-              </defs>
-              <text>
-                <textPath href="#seal-path" textLength="510">{RING}</textPath>
-              </text>
-            </svg>
+            <div className="seal__ring">
+              <svg viewBox="0 0 200 200" width="200" height="200">
+                {RING_CHARS.map((c, i) => (
+                  <text key={i} x="100" y="18" textAnchor="middle" transform={`rotate(${((i * 360) / RING_CHARS.length).toFixed(3)} 100 100)`}>
+                    {c}
+                  </text>
+                ))}
+              </svg>
+            </div>
             <span className="seal__mark">B.</span>
           </div>
         </div>

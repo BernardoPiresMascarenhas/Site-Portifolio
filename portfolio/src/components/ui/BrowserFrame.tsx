@@ -11,7 +11,7 @@ type Props = {
 
 /** Moldura de navegador com a captura real do site publicado. */
 export default function BrowserFrame({ project, priority = false, sizes = '(min-width: 1024px) 60vw, 100vw', className = '' }: Props) {
-  const host = project.url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');
+  const host = project.url ? project.url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '') : project.slug;
 
   return (
     <div className={`browser ${className}`}>

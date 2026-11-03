@@ -1,14 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import { ArrowDownRight, ArrowUpRight } from 'lucide-react';
 import { FaWhatsapp } from 'react-icons/fa';
-import { projects, whatsappLink } from '../../data/site';
+import { clientProjects, whatsappLink } from '../../data/site';
 import BrowserFrame from '../ui/BrowserFrame';
 import SplitWords from '../ui/SplitWords';
 import { plain, toWords } from '../../utils/words';
 import { prefersReducedMotion } from '../../hooks/usePageEffects';
 
 const TITLE = 'Sites que destacam sua marca e transformam visitas em *oportunidades.*';
-const showcase = projects.filter((p) => p.featured);
+const showcase = clientProjects.filter((p) => p.featured);
 const INTERVAL = 4800;
 
 export default function Hero() {
@@ -131,7 +131,7 @@ export default function Hero() {
         <div className="marquee__track">
           {[0, 1].map((copy) => (
             <ul key={copy} aria-hidden={copy === 1 ? 'true' : undefined}>
-              {projects.map((p) => (
+              {clientProjects.map((p) => (
                 <li key={p.slug}>
                   <span>{p.segment}</span>
                   <i aria-hidden="true">✦</i>

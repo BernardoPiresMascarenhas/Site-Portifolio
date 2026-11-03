@@ -1,6 +1,6 @@
 import { Check, Gauge, LifeBuoy, Mail } from 'lucide-react';
 import { FaWhatsapp } from 'react-icons/fa';
-import { projects } from '../../data/site';
+import { clientProjects } from '../../data/site';
 
 export default function Differentials() {
   return (
@@ -38,7 +38,7 @@ export default function Differentials() {
 
           <article className="tile tile--design" data-reveal>
             <div className="swatches" aria-hidden="true">
-              {projects.map((p, i) => (
+              {clientProjects.map((p, i) => (
                 <span key={p.slug} style={{ background: p.accent, '--i': i } as React.CSSProperties} title={p.title} />
               ))}
             </div>
